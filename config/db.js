@@ -12,12 +12,12 @@ const sequelize = new Sequelize({
   username: db_user,
   password: db_password,
   database: db_name,
-  //   ssl: true, // Enable SSL
-  //   dialectOptions: {
-  //     ssl: {
-  //       require: true, // This is the key option to enforce SSL
-  //     },
-  //   },
+  ssl: true, // Enable SSL
+  dialectOptions: {
+    ssl: {
+      require: true, // This is the key option to enforce SSL
+    },
+  },
 });
 
 module.exports = sequelize;

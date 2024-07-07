@@ -25,16 +25,6 @@ describe("Token Generation", () => {
   });
 });
 
-// Mocking database  for authentication endpoints
-// jest.mock("../models/user.model", () => ({
-//   create: jest.fn((user) => Promise.resolve({ userId: 1, ...user })),
-//   findOne: jest.fn((condition) => {
-//     if (condition.where.email === "test@gmail.com") {
-//       return Promise.resolve({ userId: 1, ...condition.where });
-//     }
-//     return Promise.resolve(null);
-//   }),
-// }));
 const UserMock = sequelizeMock.define("User", {
   userId: 1,
   email: "",
