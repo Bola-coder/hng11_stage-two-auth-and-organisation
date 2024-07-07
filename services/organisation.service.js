@@ -52,7 +52,7 @@ exports.createNewOrganisation = async (user, data) => {
 };
 
 exports.addUserToOrganisation = async (orgId, userId) => {
-  const organisation = await Organisation.findByPk(orgId);
+  const organisation = await Organisation.findOne(orgId);
 
   if (!organisation) {
     throw new AppError(
