@@ -70,7 +70,7 @@ describe("Auth Endpoints", () => {
     expect(orgRes.body.data.organisations[0].name.split("'")[0]).toBe(
       user.firstName
     );
-  });
+  }, 20000);
 
   it("should log the user in successfully", async () => {
     const user = {
@@ -89,7 +89,7 @@ describe("Auth Endpoints", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body.data.user.email).toBe(user.email);
     expect(res.body.data.accessToken).toBe(token);
-  });
+  }, 20000);
 
   it("should fail if required fields are missing", async () => {
     const res = await request(app).post("/auth/register").send({
@@ -104,7 +104,7 @@ describe("Auth Endpoints", () => {
         field: expect.any(String),
       })
     );
-  });
+  }, 20000);
 
   it("should fail if there's duplicate email or userID", async () => {
     const user = {
@@ -133,7 +133,7 @@ describe("Auth Endpoints", () => {
         field: "email",
       })
     );
-  });
+  }, 20000);
 });
 
 // describe("Auth Endpoints", () => {

@@ -16,6 +16,7 @@ const sequelize = new Sequelize({
   dialectOptions: {
     ssl: {
       require: true, // This is the key option to enforce SSL
+      rejectUnauthorized: false, // Disable verification
     },
   },
 });
