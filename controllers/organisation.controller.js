@@ -55,6 +55,10 @@ exports.createNewOrganisation = catchAsync(async (req, res, next) => {
 exports.addUserToOrganisation = catchAsync(async (req, res, next) => {
   const { orgId } = req.params;
   const { userId } = req.body;
-  const result = await organisationService.addUserToOrganisation(orgId, userId);
+  const result = await organisationService.addUserToOrganisation(
+    orgId,
+    userId,
+    req.user
+  );
   res.status(200).json(result);
 });

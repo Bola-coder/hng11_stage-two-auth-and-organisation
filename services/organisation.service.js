@@ -51,14 +51,22 @@ exports.createNewOrganisation = async (user, data) => {
   return organisation;
 };
 
-exports.addUserToOrganisation = async (orgId, userId) => {
-  const organisation = await Organisation.findOne(orgId);
+exports.addUserToOrganisation = async (orgId, userId, requester) => {
+  const organisation = await Organisation.findOne({ where: { orgid: orgId } });
 
   if (!organisation) {
-    throw new AppError(
-      `Organisation with id ${orgId} not found for the logged in user!`,
-      404
-    );
+    throw new AppError(`Organisation with id ${orgId} not found!`, 404);
+  }
+
+  // Check if the requester is the owner or a member of the organisation
+  if (organisation.ownerId !== requester.userId) {
+    const isMember = await organisation.hasUser(requester);
+    if (!isMember) {
+      throw new AppError(
+        `Requester is not authorized to add users to this organisation!`,
+        403
+      );
+    }
   }
 
   const user = await User.findByPk(userId);
