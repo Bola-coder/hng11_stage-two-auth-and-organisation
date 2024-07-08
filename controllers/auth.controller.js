@@ -83,6 +83,7 @@ const register = catchAsync(async (req, res, next) => {
   const organisation = await Organisation.create({
     name: userOrganisationName,
     ownerId: user.userId,
+    description: "Organisation created for the user after signup",
   });
 
   if (!organisation) {

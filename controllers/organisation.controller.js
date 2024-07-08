@@ -27,7 +27,7 @@ exports.getOrganisation = catchAsync(async (req, res, next) => {
   if (!organisation) {
     return next(
       new AppError(
-        `Organisation with id ${orgId} not found for the logged in user!`,
+        "Organisation with id ${orgId} not found for the logged in user!",
         404
       )
     );
@@ -55,10 +55,11 @@ exports.createNewOrganisation = catchAsync(async (req, res, next) => {
 exports.addUserToOrganisation = catchAsync(async (req, res, next) => {
   const { orgId } = req.params;
   const { userId } = req.body;
-  const result = await organisationService.addUserToOrganisation(
-    orgId,
-    userId,
-    req.user
-  );
+
+  if (!userId) {
+    return next(new AppError("User ID is required", 400));
+  }
+  const result = await organisationService.addUserToOrganisation(orgId, userId);
+
   res.status(200).json(result);
 });

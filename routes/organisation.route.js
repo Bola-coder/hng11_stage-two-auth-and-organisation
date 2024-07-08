@@ -20,10 +20,6 @@ router.post(
   organisationController.createNewOrganisation
 );
 
-router.post(
-  "/:orgId/users",
-  authMiddleware.protectRoute,
-  organisationController.addUserToOrganisation
-);
+router.post("/:orgId/users", organisationController.addUserToOrganisation);
 
 module.exports = router;

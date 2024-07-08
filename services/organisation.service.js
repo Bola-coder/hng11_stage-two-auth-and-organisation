@@ -22,7 +22,7 @@ exports.getOrganisation = async (user, orgId) => {
 
     if (!org.length) {
       throw new AppError(
-        `Organisation with id ${orgId} not found for the logged in user!`,
+        "Organisation with id ${orgId} not found for the logged in user!",
         404
       );
     }
@@ -51,30 +51,22 @@ exports.createNewOrganisation = async (user, data) => {
   return organisation;
 };
 
-exports.addUserToOrganisation = async (orgId, userId, requester) => {
-  const organisation = await Organisation.findOne({ where: { orgid: orgId } });
+exports.addUserToOrganisation = async (orgId, userId) => {
+  const organisation = await Organisation.findByPk(orgId);
 
   if (!organisation) {
-    throw new AppError(`Organisation with id ${orgId} not found!`, 404);
-  }
-
-  // Check if the requester is the owner or a member of the organisation
-  if (organisation.ownerId !== requester.userId) {
-    const isMember = await organisation.hasUser(requester);
-    if (!isMember) {
-      throw new AppError(
-        `Requester is not authorized to add users to this organisation!`,
-        403
-      );
-    }
+    throw new AppError(
+      " Organisation with id ${orgId} not found for the logged in user!",
+      400
+    );
   }
 
   const user = await User.findByPk(userId);
 
   if (!user) {
     throw new AppError(
-      `User with id ${userId} not found and cannot be added to the organisation!`,
-      404
+      "User with id ${userId} not found and cannot be added to the organisation!",
+      400
     );
   }
 
@@ -83,8 +75,8 @@ exports.addUserToOrganisation = async (orgId, userId, requester) => {
 
   if (userInOrganisation) {
     throw new AppError(
-      `User with id ${userId} is already in the organisation!`,
-      404
+      "User with id ${userId} is already in the organisation!",
+      400
     );
   }
 
